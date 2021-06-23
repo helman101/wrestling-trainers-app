@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const TrainerInfo = (props) => {
-  const { handleLink } = props;
-  const { name, trainer_img } = props.trainer;
+  const { trainer, handleClick } = props;
+  const { name, trainerImg } = trainer;
 
   return (
-    <Link to="/trainerProfile">
+    <Link to="/trainerProfile" onClick={handleClick}>
       <figure>
-        <img src={trainer_img} alt={name} />
+        <img src={trainerImg} alt={name} />
         <figcaption>{name}</figcaption>
       </figure>
     </Link>
@@ -17,9 +17,11 @@ const TrainerInfo = (props) => {
 };
 
 TrainerInfo.propTypes = {
-  name: PropTypes.string.isRequired,
-  trainer_img: PropTypes.string.isRequired,
-  handleLink: PropTypes.func.isRequired,
+  trainer: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    trainerImg: PropTypes.string.isRequired,
+  }).isRequired,
+  handleClick: PropTypes.func.isRequired,
 };
 
 export default TrainerInfo;
