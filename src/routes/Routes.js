@@ -7,6 +7,8 @@ import HowTo from '../components/HowTo';
 import AppointmentList from '../container/AppointmentList';
 import LogIn from '../components/LogIn';
 import SignIn from '../components/SignIn';
+import TrainerList from '../container/TrainerList';
+import TrainerProfile from '../components/TrainerProfile';
 
 const Routes = () => (
   <BrowserRouter>
@@ -15,7 +17,9 @@ const Routes = () => (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/how_to" component={HowTo} />
-      <Route path="/my_appointments" component={AppointmentList} />
+      <Route path="/appointments" component={AppointmentList} />
+      <Route path="/trainerProfile" component={TrainerProfile} />
+      <Route path="/trainers" component={TrainerList} />
       <Route path="/login" component={LogIn} />
       <Route path="/signin" component={SignIn} />
     </Switch>
