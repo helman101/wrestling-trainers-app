@@ -1,26 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import styles from '../assets/styles/style.module.css';
+import { appointmentCreate } from '../API/api';
 
 const TrainerProfile = (props) => {
   const { trainer, user } = props;
+  const [date, setDate] = useState(null);
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    setDate(value);
+  };
+
+  const handleClick = () => {
+    let newDate = new Date(Date.parse(date));
+    newDate = `${newDate.getDay()}/${newDate.getMonth()}/${newDate.getFullYear()} ${newDate.getHours()}:${newDate.getMinutes()}`;
+    const params = {
+      time: newDate,
+      userId: user.id,
+      trainerId: trainer.id,
+    };
+    if (date !== null) {
+      props.dispatch(appointmentCreate(params, props.history.push));
+    }
+  };
+
+  const getDisplay = () => {
+    if (Object.keys(user).length !== 0) {
+      return (
+        <div className={`${styles.profileBtnCont}`}>
+          <div className={`${styles.pb1}`}>
+            <div className={`${styles.mb1} ${styles.appointment}`}>Set an Appointment</div>
+            <input type="datetime-local" onChange={handleChange} />
+            <button type="button" className={`${styles.ml1} ${styles.appointmentBtn}`} onClick={handleClick}>Submit</button>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <Link to="/Log_in" className={`${styles.btnRed}`}>Please log in to make appointments</Link>
+    );
+  };
 
   return (
-    <div>
-      <div>
-        <h2>{trainer.name}</h2>
-        <h3>
+    <div className={`${styles.dFlex} ${styles.trainerProfile}`}>
+      <div className={`${styles.width50p} ${styles.dFlex} ${styles.justifyContentCenter}`}>
+        <img className={`${styles.trainerPImg}`} src={trainer.trainerImg} alt={trainer.name} />
+      </div>
+      <div className={`${styles.width50p}`}>
+        <div className={`${styles.profileTitle}`}>{trainer.name}</div>
+        <div className={`${styles.profileFighting}`}>
           Figthing Style:
           {' '.concat(trainer.fightingStyle)}
-        </h3>
-        <p>{trainer.description}</p>
-        { Object.keys(user).length === 0
-          ? <button type="button">See Avaible Classes</button>
-          : <Link to="/logIn">Log In To See Avaible Classes</Link>}
-      </div>
-      <div>
-        <img src={trainer.trainerImg} alt={trainer.name} />
+        </div>
+        <div className={`${styles.profileDesc} ${styles.mb1}`}>{trainer.description}</div>
+        { getDisplay() }
       </div>
     </div>
   );
@@ -29,6 +65,8 @@ const TrainerProfile = (props) => {
 TrainerProfile.propTypes = {
   trainer: PropTypes.instanceOf(Object).isRequired,
   user: PropTypes.instanceOf(Object).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
