@@ -8,6 +8,9 @@ import defaultState from './store/store';
 import userReducer from './reducers/userReducer';
 import currentReducer from './reducers/currentReducer';
 import trainersReducer from './reducers/trainerReducer';
+import { trainerListRequest } from './API/api';
+import 'react-toastify/dist/ReactToastify.css';
+import './assets/styles/index.css';
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -17,11 +20,11 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer, defaultState, applyMiddleware(thunk));
 
+store.dispatch(trainerListRequest);
+
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <Routes />
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <Routes />
+  </Provider>,
   document.getElementById('root'),
 );
