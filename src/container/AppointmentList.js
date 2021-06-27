@@ -16,7 +16,7 @@ const AppointmentList = (props) => {
     result[0] = result[0].split('-');
     return result;
   };
-  console.log(appointments);
+
   return (
     <div>
       <h1>{user.name.concat(' Appointments')}</h1>

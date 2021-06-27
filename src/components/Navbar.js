@@ -7,7 +7,6 @@ import styles from '../assets/styles/style.module.css';
 
 const Navbar = (props) => {
   const { user } = props;
-  console.log(user);
 
   const handleLogOut = () => {
     props.dispatch(logUserOutAction());
