@@ -1,13 +1,13 @@
 const SET_USER = 'SET_USER';
-const UNSET_USER = 'USET_USER';
+const UNSET_USER = 'UNSET_USER';
 
-const userReducer = (state = null, action) => {
+const userReducer = (state = {}, action) => {
   switch (action.type) {
     case SET_USER: {
       return action.payload;
     }
     case UNSET_USER: {
-      return null;
+      return {};
     }
     default:
       return state;

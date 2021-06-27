@@ -1,23 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import styles from '../assets/styles/style.module.css';
 
-const LeftMenu = (props) => {
-  const { user } = props;
-  return (
-    <aside>
-      <div>
+const LeftMenu = () => (
+  <aside className={`${styles.leftMenu}`}>
+    <ul className={`${styles.leftList} ${styles.mt5} ${styles.ml25p}`}>
+      <li>
         <Link to="/">Home</Link>
+      </li>
+      <li>
         <Link to="/how_to">How to</Link>
+      </li>
+      <li>
         <Link to="/trainers">Trainers</Link>
-        { user && <Link to="/my_appointment">My Appointments</Link> }
-      </div>
-    </aside>
-  );
-};
-
-LeftMenu.propTypes = {
-  user: PropTypes.instanceOf(Object).isRequired,
-};
+      </li>
+    </ul>
+  </aside>
+);
 
 export default LeftMenu;
