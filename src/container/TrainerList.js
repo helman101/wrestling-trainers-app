@@ -1,18 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import trainerListRequest from '../API/api';
 import TrainerInfo from '../components/TrainerInfo';
 import changeCurrentTrainer from '../actions/current';
+import styles from '../assets/styles/style.module.css';
 
 const TrainerList = (props) => {
   const { trainers } = props;
-
-  useEffect(() => {
-    if (trainers.length === 0) {
-      props.dispatch(trainerListRequest);
-    }
-  }, []);
 
   const handleLink = (trainer) => () => {
     props.dispatch(changeCurrentTrainer(trainer));
@@ -26,14 +20,17 @@ const TrainerList = (props) => {
     );
   }
   return (
-    <div>
-      {trainers.map((trainer) => (
-        <TrainerInfo
-          key={trainer.name}
-          trainer={trainer}
-          handleClick={handleLink(trainer)}
-        />
-      ))}
+    <div className={`${styles.trainerList}`}>
+      <h1 className={`${styles.title}`}>TRAINERS</h1>
+      <div className={`${styles.dFlex} ${styles.flexWrap} ${styles.justifyContentBetween}`}>
+        {trainers.map((trainer) => (
+          <TrainerInfo
+            key={trainer.name}
+            trainer={trainer}
+            handleClick={handleLink(trainer)}
+          />
+        ))}
+      </div>
     </div>
   );
 };
