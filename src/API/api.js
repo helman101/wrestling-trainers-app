@@ -2,12 +2,8 @@ import setTrainersAction from '../actions/trainers';
 import { logUserInAction } from '../actions/user';
 
 const trainerListRequest = async (dispatch) => {
-  try {
-    const result = await fetch('https://wrestling-api-helman101.herokuapp.com/trainers').then((res) => res.json());
-    dispatch(setTrainersAction(result));
-  } catch (err) {
-    dispatch();
-  }
+  const result = await fetch('https://wrestling-api-helman101.herokuapp.com/trainers').then((res) => res.json());
+  dispatch(setTrainersAction(result));
 };
 
 const userRequest = (params, push, toast) => async (dispatch) => {
@@ -17,16 +13,18 @@ const userRequest = (params, push, toast) => async (dispatch) => {
     dispatch(logUserInAction(result));
     push('/');
   }
-  const message = result.status === 'NO EXIST' ? 'User doesn\'t exist' : 'Wrong Password or Name';
-  toast.error(message, {
-    position: 'top-right',
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
+  if (result.status) {
+    const message = result.status === 'NO EXIST' ? 'User doesn\'t exist' : 'Wrong Password or Name';
+    toast.error(message, {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
 };
 
 const userCreate = (params, push, toast) => async (dispatch) => {
@@ -44,16 +42,18 @@ const userCreate = (params, push, toast) => async (dispatch) => {
     push('/');
     dispatch(logUserInAction(result));
   }
-  const message = result.message.includes('blank') ? 'No space can be blank' : 'Name or Email in use';
-  toast.error(message, {
-    position: 'top-right',
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
+  if (result.message) {
+    const message = result.message.includes('blank') ? 'No space can be blank' : 'Name or Email in use';
+    toast.error(message, {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
 };
 
 const appointmentCreate = (data, push) => async () => {
