@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { appointmentGet } from '../API/api';
+import styles from '../assets/styles/style.module.css';
 
 const AppointmentList = (props) => {
   const { user, trainers } = props;
@@ -12,20 +13,20 @@ const AppointmentList = (props) => {
   }, []);
 
   const getRigthTime = (a) => {
-    const result = a.appointmentTime.slice(0, 16).replace('T', ' ').split(' ');
+    const result = a.appointmentTime.split('T');
     result[0] = result[0].split('-');
     return result;
   };
 
   return (
-    <div>
+    <div className={`${styles.dFlex} ${styles.flexColumn} ${styles.alignItemsCenter} ${styles.appointments}`}>
       <h1>{user.name.concat(' Appointments')}</h1>
-      <table>
+      <table className={`${styles.table} ${styles.mt2}`}>
         <thead>
           <tr>
-            <td>Trainer</td>
-            <td>Date</td>
-            <td>Hour</td>
+            <td className={styles.tableHead}>Trainer</td>
+            <td className={styles.tableHead}>Date</td>
+            <td className={styles.tableHead}>Hour</td>
           </tr>
         </thead>
         { appointments && appointments.map((appointment) => {
@@ -34,8 +35,8 @@ const AppointmentList = (props) => {
             <tbody key={appointment.id}>
               <tr>
                 <td>{trainers[appointment.trainer_id - 1].name}</td>
-                <td>{`${date[0][2]}/${date[0][1]}/${date[0][0]}`}</td>
-                <td>{`${date[1]}`}</td>
+                <td>{`${date[0][2]}-${date[0][1]}-${date[0][0]}`}</td>
+                <td>{`${date[1].slice(0, 5)}`}</td>
               </tr>
             </tbody>
           );
