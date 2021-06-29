@@ -11,12 +11,12 @@ const TrainerProfile = (props) => {
 
   const handleChange = (e) => {
     const { value } = e.target;
-    setDate(value);
+    const date = value.replace('T', ' ');
+    setDate(date);
   };
 
   const handleClick = () => {
-    let newDate = new Date(Date.parse(date));
-    newDate = `${newDate.getDay()}/${newDate.getMonth()}/${newDate.getFullYear()} ${newDate.getHours()}:${newDate.getMinutes()}`;
+    const newDate = new Date(date);
     const params = {
       time: newDate,
       userId: user.id,
