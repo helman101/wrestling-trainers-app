@@ -13,7 +13,9 @@ A complete web page for users to make an appointment with a wrestling trainer ba
 - make appointments
 - see their appointments
 
-![](src/utilities/screenshot.png)
+# Project Preview
+
+![](src/assets/img/wrestler-s.PNG)
 
 ## [Live Link](https://nervous-benz-f4b5b8.netlify.app/trainers)
 
