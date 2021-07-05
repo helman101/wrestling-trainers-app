@@ -6,14 +6,14 @@ import { userRequest } from '../API/api';
 import styles from '../assets/styles/style.module.css';
 
 const LogIn = (props) => {
-  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === 'name') {
-      setUserName(value);
+    if (name === 'email') {
+      setUserEmail(value);
     } else {
       setUserPassword(value);
     }
@@ -21,7 +21,7 @@ const LogIn = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const params = { name: userName, password: userPassword };
+    const params = { email: userEmail, password: userPassword };
     props.dispatch(userRequest(params, props.history.push, toast));
   };
 
@@ -40,7 +40,7 @@ const LogIn = (props) => {
       />
       <div className={`${styles.sessionTitle}`}>Log In</div>
       <form className={`${styles.mt2} ${styles.form} ${styles.dFlex} ${styles.flexColumn} ${styles.justifyContentCenter}`}>
-        <input type="text" id="name" name="name" placeholder="Name" onChange={handleChange} required />
+        <input type="email" id="email" name="email" placeholder="Email" onChange={handleChange} />
         <br />
         <input type="password" id="password" name="password" placeholder="Password" onChange={handleChange} />
         <br />
