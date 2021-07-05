@@ -7,7 +7,7 @@ const trainerListRequest = async (dispatch) => {
 };
 
 const userRequest = (params, push, toast) => async (dispatch) => {
-  const urlParams = `?name=${params.name}&password=${params.password}`;
+  const urlParams = `?email=${params.email}&password=${params.password}`;
   const result = await fetch('https://wrestling-api-helman101.herokuapp.com/login'.concat(urlParams)).then((res) => res.json());
   if (result.name) {
     dispatch(logUserInAction(result));
@@ -38,12 +38,13 @@ const userCreate = (params, push, toast) => async (dispatch) => {
     url,
     send,
   ).then((res) => res.json());
-  if (result.status) {
+  if (result.name) {
     push('/');
     dispatch(logUserInAction(result));
   }
   if (result.message) {
-    const message = result.message.includes('blank') ? 'No space can be blank' : 'Name or Email in use';
+    console.log(result.message);
+    const message = result.message.includes('blank') ? 'No space can be blank' : result.message.slice(19);
     toast.error(message, {
       position: 'top-right',
       autoClose: 5000,
