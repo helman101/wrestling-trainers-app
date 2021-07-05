@@ -43,7 +43,6 @@ const userCreate = (params, push, toast) => async (dispatch) => {
     dispatch(logUserInAction(result));
   }
   if (result.message) {
-    console.log(result.message);
     const message = result.message.includes('blank') ? 'No space can be blank' : result.message.slice(19);
     toast.error(message, {
       position: 'top-right',
