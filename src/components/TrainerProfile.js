@@ -33,7 +33,7 @@ const TrainerProfile = (props) => {
         <div className={`${styles.profileBtnCont}`}>
           <div className={`${styles.pb1}`}>
             <div className={`${styles.mb1} ${styles.appointment}`}>Set an Appointment</div>
-            <input type="datetime-local" onChange={handleChange} />
+            <input type="datetime-local" min={Date.now} value={Date.now} onChange={handleChange} />
             <button type="button" className={`${styles.ml1} ${styles.appointmentBtn}`} onClick={handleClick}>Submit</button>
           </div>
         </div>
