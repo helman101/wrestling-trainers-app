@@ -3,8 +3,8 @@ import renderer from 'react-test-renderer';
 import HowTo from '../../components/HowTo';
 
 it('renders correctly', () => {
-  const quotePage = renderer
+  const howTo = renderer
     .create(<HowTo />)
     .toJSON();
-  expect(quotePage).toMatchSnapshot();
+  expect(howTo).toMatchSnapshot();
 });
