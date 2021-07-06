@@ -12,17 +12,17 @@ describe('LogIn', () => {
   let store;
   let component;
   let history;
- 
+
   beforeEach(() => {
     history = createMemoryHistory();
     store = mockStore(defaultState);
     component = renderer.create(
       <Provider store={store}>
         <LogIn history={history} />
-      </Provider>
+      </Provider>,
     );
   });
- 
+
   it('should render propertly', () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
