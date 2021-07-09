@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
 import styles from '../assets/styles/style.module.css';
 import { appointmentCreate } from '../API/api';
 
@@ -17,13 +18,33 @@ const TrainerProfile = (props) => {
 
   const handleClick = () => {
     const newDate = new Date(date);
-    const params = {
-      time: newDate,
-      userId: user.id,
-      trainerId: trainer.id,
-    };
-    if (date !== null) {
-      props.dispatch(appointmentCreate(params, props.history.push));
+    const now = new Date(Date.now());
+    if (newDate.getTime() > now.getTime()) {
+      const params = {
+        time: newDate,
+        userId: user.id,
+        trainerId: trainer.id,
+      };
+      if (date !== null) {
+        props.dispatch(appointmentCreate(params, props.history.push));
+      }
+    } else {
+      toast.error(
+        <div>
+          Input date has passed.
+          <br />
+          Please introduce a valid date.
+        </div>,
+        {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        },
+      );
     }
   };
 
@@ -33,7 +54,7 @@ const TrainerProfile = (props) => {
         <div className={`${styles.profileBtnCont}`}>
           <div className={`${styles.pb1}`}>
             <div className={`${styles.mb1} ${styles.appointment}`}>Set an Appointment</div>
-            <input type="datetime-local" min={Date.now} value={Date.now} onChange={handleChange} />
+            <input type="datetime-local" onChange={handleChange} />
             <button type="button" className={`${styles.ml1} ${styles.appointmentBtn}`} onClick={handleClick}>Submit</button>
           </div>
         </div>
@@ -46,6 +67,17 @@ const TrainerProfile = (props) => {
 
   return (
     <div className={`${styles.dFlex} ${styles.trainerProfile}`}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className={`${styles.width50p} ${styles.dFlex} ${styles.justifyContentCenter}`}>
         <img className={`${styles.trainerPImg}`} src={trainer.trainerImg} alt={trainer.name} />
       </div>

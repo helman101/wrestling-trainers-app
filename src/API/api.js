@@ -2,13 +2,13 @@ import setTrainersAction from '../actions/trainers';
 import { logUserInAction } from '../actions/user';
 
 const trainerListRequest = async (dispatch) => {
-  const result = await fetch('https://wrestling-api-helman101.herokuapp.com/trainers').then((res) => res.json());
+  const result = await fetch('http://localhost:3000/trainers').then((res) => res.json());
   dispatch(setTrainersAction(result));
 };
 
 const userRequest = (params, push, toast) => async (dispatch) => {
   const urlParams = `?email=${params.email}&password=${params.password}`;
-  const result = await fetch('https://wrestling-api-helman101.herokuapp.com/login'.concat(urlParams)).then((res) => res.json());
+  const result = await fetch('http://localhost:3000/login'.concat(urlParams)).then((res) => res.json());
   if (result.name) {
     dispatch(logUserInAction(result));
     push('/');
@@ -29,7 +29,7 @@ const userRequest = (params, push, toast) => async (dispatch) => {
 
 const userCreate = (params, push, toast) => async (dispatch) => {
   const data = params;
-  const url = `https://wrestling-api-helman101.herokuapp.com/users?name=${data.name}&email=${data.email}&password=${data.password}&password_confirmation=${data.passwordConfirm}`;
+  const url = `http://localhost:3000/users?name=${data.name}&email=${data.email}&password=${data.password}&password_confirmation=${data.passwordConfirm}`;
   const send = {
     method: 'POST',
   };
@@ -57,7 +57,7 @@ const userCreate = (params, push, toast) => async (dispatch) => {
 };
 
 const appointmentCreate = (data, push) => async () => {
-  const url = `https://wrestling-api-helman101.herokuapp.com/users/${data.userId}/appointments?user_id=${data.userId}&trainer_id=${data.trainerId}&appointmentTime=${data.time}`;
+  const url = `http://localhost:3000/users/${data.userId}/appointments?user_id=${data.userId}&trainer_id=${data.trainerId}&appointmentTime=${data.time}`;
   const send = {
     method: 'POST',
   };
@@ -71,7 +71,7 @@ const appointmentCreate = (data, push) => async () => {
 };
 
 const appointmentGet = async (set, id) => {
-  const url = `https://wrestling-api-helman101.herokuapp.com/users/${id}/appointments`;
+  const url = `http://localhost:3000/users/${id}/appointments`;
 
   const result = await fetch(
     url,
